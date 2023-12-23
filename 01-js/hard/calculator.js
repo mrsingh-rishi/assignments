@@ -12,10 +12,71 @@
       Points to Note: 
         1. the input can have multiple continuous spaces, you're supposed to avoid them and parse the expression correctly
         2. the input can have invalid non-numerical characters like `5 + abc`, you're supposed to throw error for such inputs
-
   Once you've implemented the logic, test your code by running
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result = 0;
+  }
+
+  add(num) {
+    if (typeof num !== "number" || isNaN(num)) {
+      throw new Error("Invalid input. Please provide a valid number.");
+    }
+    this.result += num;
+  }
+
+  subtract(num) {
+    if (typeof num !== "number" || isNaN(num)) {
+      throw new Error("Invalid input. Please provide a valid number.");
+    }
+    this.result -= num;
+  }
+
+  multiply(num) {
+    if (typeof num !== "number" || isNaN(num)) {
+      throw new Error("Invalid input. Please provide a valid number.");
+    }
+    this.result *= num;
+  }
+
+  divide(num) {
+    if (typeof num !== "number" || isNaN(num)) {
+      throw new Error("Invalid input. Please provide a valid number.");
+    }
+    if (num === 0) {
+      throw new Error("Cannot divide by zero.");
+    }
+    this.result /= num;
+  }
+
+  clear() {
+    this.result = 0;
+  }
+
+  getResult() {
+    return this.result;
+  }
+
+  calculate(expression) {
+    const sanitizedExpression = expression.replace(/\s+/g, ""); // Remove all spaces
+    const isValid = /^[0-9+\-*/().\s]+$/.test(sanitizedExpression); // Validate expression
+
+    if (!isValid) {
+      throw new Error(
+        "Invalid expression. Please provide a valid arithmetic expression."
+      );
+    }
+
+    try {
+      const result = eval(sanitizedExpression); // Using eval for simplicity (not recommended in production)
+      this.result = result;
+      return result;
+    } catch (error) {
+      throw new Error("Error in evaluating expression.");
+    }
+  }
+}
 
 module.exports = Calculator;
